@@ -23,9 +23,15 @@ namespace Proiect_Medii_23.Pages.EchipamenteSki
         public EchipamentSkiData EchipamentSkiD { get; set; }
         public int EchipamentSkiID { get; set; }
         public int CategoryID { get; set; }
-        public async Task OnGetAsync(int? id, int? categoryID)
+        public string TitleSort { get; set; }
+        public string SizeDetailsSort { get; set; }
+        public string CurrentFilter { get; set; }
+        public async Task OnGetAsync(int? id, int? categoryID, string sortOrder, string searchString)
         {
             EchipamentSkiD = new EchipamentSkiData();
+
+            TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            SizeDetailsSort = String.IsNullOrEmpty(sortOrder) ? "sizeDetails_desc" : "";
 
             EchipamentSkiD.EchipamenteSki = await _context.EchipamentSki
             .Include(b => b.Brand)
@@ -35,14 +41,32 @@ namespace Proiect_Medii_23.Pages.EchipamenteSki
             .AsNoTracking()
             .OrderBy(b => b.Title)
             .ToListAsync();
-            if (id != null)
+
+            if (!String.IsNullOrEmpty(searchString))
             {
-                EchipamentSkiID = id.Value;
-                EchipamentSki echipamentSki = EchipamentSkiD.EchipamenteSki
-                .Where(i => i.ID == id.Value).Single();
-                EchipamentSkiD.Categories = echipamentSki.EchipamentSkiCategories.Select(s => s.Category);
+                EchipamentSkiD.EchipamenteSki = EchipamentSkiD.EchipamenteSki.Where(s => s.SizeDetails.Sex.Contains(searchString)
+                || s.SizeDetails.Size.Contains(searchString)
+                || s.Title.Contains(searchString));
+
+                if (id != null)
+                {
+                    EchipamentSkiID = id.Value;
+                    EchipamentSki echipamentSki = EchipamentSkiD.EchipamenteSki
+                    .Where(i => i.ID == id.Value).Single();
+                    EchipamentSkiD.Categories = echipamentSki.EchipamentSkiCategories.Select(s => s.Category);
+                }
+                switch (sortOrder)
+                {
+                    case "title_desc":
+                        EchipamentSkiD.EchipamenteSki = EchipamentSkiD.EchipamenteSki.OrderByDescending(s =>
+                       s.Title);
+                        break;
+                    case "sizeDetails_desc":
+                        EchipamentSkiD.EchipamenteSki = EchipamentSkiD.EchipamenteSki.OrderByDescending(s =>
+                       s.SizeDetails.SexAndSize);
+                        break;
+                }
             }
         }
-
     }
 }

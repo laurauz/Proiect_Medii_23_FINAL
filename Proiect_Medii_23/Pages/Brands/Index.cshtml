@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int?}"
 @model Proiect_Medii_23.Pages.Brands.IndexModel
 
 @{
@@ -20,17 +20,53 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Brand) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BrandName)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.BrandData.Brands)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.BrandID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrandName)
+                </td>
+
+                <td>
+                    <a asp-page="./Index" asp-route-id="@item.ID">Select</a> |
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@if (Model.BrandData.EchipamenteSki != null)
+{
+    <h3>Books Edited by Selected Publisher</h3>
+    <table class="table">
+
+        @foreach (var item in Model.BrandData.Brands)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.BrandID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+
+                <td>
+                    @{
+                        foreach (var b in item.EchipamenteSki)
+                        {
+                            @b.Title @:/ @b.SizeDetails.SexAndSize
+
+                            <br />
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}

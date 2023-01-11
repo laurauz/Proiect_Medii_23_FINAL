@@ -1,0 +1,80 @@
+﻿@page 
+@model Proiect_Medii_23.Pages.EchipamenteSki.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EchipamentSki[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EchipamentSki[0].SizeDetails.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EchipamentSki[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EchipamentSki[0].StocDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EchipamentSki[0].Brand.BrandName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EchipamentSki[0].EchipamentSkiCategories)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.EchipamentSkiD.EchipamenteSki)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.EchipamentSkiID)
+            {
+                selectedRow = "table-success";
+            }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SizeDetails.SexAndSize)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StocDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand.BrandName)
+                </td>
+                <td>
+                    @{
+                        foreach (var category in item.EchipamentSkiCategories)
+                        {
+                            @category.Category.ID @: @category.Category.CategoryName <br />
+                        }
+                    }
+                </td>
+
+                <td>
+
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

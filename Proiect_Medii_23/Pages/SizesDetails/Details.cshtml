@@ -1,0 +1,31 @@
+﻿@page
+@model Proiect_Medii_23.Pages.SizesDetails.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>SizeDetails</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SizeDetails.Sex)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SizeDetails.Sex)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SizeDetails.Size)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SizeDetails.Size)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.SizeDetails?.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

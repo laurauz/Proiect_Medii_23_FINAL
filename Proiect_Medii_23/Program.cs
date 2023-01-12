@@ -18,6 +18,8 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AllowAnonymousToPage("/EchipamenteSki/Details");
     options.Conventions.AuthorizeFolder("/Customers", "AdminPolicy");
     options.Conventions.AuthorizeFolder("/Orders", "AdminPolicy");
+    options.Conventions.AuthorizeFolder("/Categories", "AdminPolicy");
+    options.Conventions.AuthorizeFolder("/Brands", "AdminPolicy");
 });
 
 builder.Services.AddDbContext<Proiect_Medii_23Context>(options =>

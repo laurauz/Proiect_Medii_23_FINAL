@@ -17,7 +17,8 @@ namespace Proiect_Medii_23.Models
         public SizeDetails? SizeDetails { get; set; }
 
 
-        [Column(TypeName = "decimal(6, 2)")]
+        [Column(TypeName = "decimal(6, 2)")
+        [Range(0.01, 500)]
         public decimal Price { get; set; }
 
         [DataType(DataType.Date)]

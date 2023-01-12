@@ -4,12 +4,27 @@ using Proiect_Medii_23.Data;
 using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+    policy.RequireRole("Admin"));
+});
+
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/EchipamenteSki");
+    options.Conventions.AllowAnonymousToPage("/EchipamenteSki/Index");
+    options.Conventions.AllowAnonymousToPage("/EchipamenteSki/Details");
+    options.Conventions.AuthorizeFolder("/Customers", "AdminPolicy");
+    options.Conventions.AuthorizeFolder("/Orders", "AdminPolicy");
+});
+
 builder.Services.AddDbContext<Proiect_Medii_23Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Proiect_Medii_23Context") ?? throw new InvalidOperationException("Connection string 'Proiect_Medii_23Context' not found.")));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<LibraryIdentityContext>();
 
 builder.Services.AddDbContext<LibraryIdentityContext>(options =>

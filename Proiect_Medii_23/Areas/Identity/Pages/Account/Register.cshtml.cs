@@ -134,10 +134,12 @@ _context;
             Customer.Email = Input.Email;
             _context.Customer.Add(Customer);
             await _context.SaveChangesAsync();
+           
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");
 
+                var role = await _userManager.AddToRoleAsync(user, "User");
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await
                _userManager.GenerateEmailConfirmationTokenAsync(user);

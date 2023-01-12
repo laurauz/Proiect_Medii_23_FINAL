@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proiect_Medii_23.Data;
 
@@ -11,9 +12,10 @@ using Proiect_Medii_23.Data;
 namespace Proiect_Medii_23.Migrations
 {
     [DbContext(typeof(Proiect_Medii_23Context))]
-    partial class Proiect_Medii_23ContextModelSnapshot : ModelSnapshot
+    [Migration("20230111224907_orders2")]
+    partial class orders2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

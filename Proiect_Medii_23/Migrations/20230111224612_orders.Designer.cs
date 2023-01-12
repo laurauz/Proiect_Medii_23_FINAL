@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proiect_Medii_23.Data;
 
@@ -11,9 +12,10 @@ using Proiect_Medii_23.Data;
 namespace Proiect_Medii_23.Migrations
 {
     [DbContext(typeof(Proiect_Medii_23Context))]
-    partial class Proiect_Medii_23ContextModelSnapshot : ModelSnapshot
+    [Migration("20230111224612_orders")]
+    partial class orders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,35 +56,6 @@ namespace Proiect_Medii_23.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("Proiect_Medii_23.Models.Customer", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<string>("Adress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("Proiect_Medii_23.Models.EchipamentSki", b =>
@@ -141,32 +114,6 @@ namespace Proiect_Medii_23.Migrations
                     b.ToTable("EchipamentSkiCategory");
                 });
 
-            modelBuilder.Entity("Proiect_Medii_23.Models.Order", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int?>("CustomerID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EchipamentSkiID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("CustomerID");
-
-                    b.HasIndex("EchipamentSkiID");
-
-                    b.ToTable("Order");
-                });
-
             modelBuilder.Entity("Proiect_Medii_23.Models.SizeDetails", b =>
                 {
                     b.Property<int>("ID")
@@ -222,21 +169,6 @@ namespace Proiect_Medii_23.Migrations
                     b.Navigation("EchipamentSki");
                 });
 
-            modelBuilder.Entity("Proiect_Medii_23.Models.Order", b =>
-                {
-                    b.HasOne("Proiect_Medii_23.Models.Customer", "Customer")
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerID");
-
-                    b.HasOne("Proiect_Medii_23.Models.EchipamentSki", "EchipamentSki")
-                        .WithMany()
-                        .HasForeignKey("EchipamentSkiID");
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("EchipamentSki");
-                });
-
             modelBuilder.Entity("Proiect_Medii_23.Models.Brand", b =>
                 {
                     b.Navigation("EchipamenteSki");
@@ -245,11 +177,6 @@ namespace Proiect_Medii_23.Migrations
             modelBuilder.Entity("Proiect_Medii_23.Models.Category", b =>
                 {
                     b.Navigation("EchipamentSkiCategories");
-                });
-
-            modelBuilder.Entity("Proiect_Medii_23.Models.Customer", b =>
-                {
-                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Proiect_Medii_23.Models.EchipamentSki", b =>

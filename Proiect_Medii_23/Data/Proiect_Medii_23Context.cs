@@ -21,5 +21,9 @@ namespace Proiect_Medii_23.Data
         public DbSet<Proiect_Medii_23.Models.SizeDetails> SizeDetails { get; set; }
 
         public DbSet<Proiect_Medii_23.Models.Category> Category { get; set; }
+
+        public DbSet<Proiect_Medii_23.Models.Customer> Customer { get; set; }
+
+        public DbSet<Proiect_Medii_23.Models.Order> Order { get; set; }
     }
 }
